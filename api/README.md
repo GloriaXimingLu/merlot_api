@@ -1,6 +1,6 @@
 # Merlot API
 
-Here, `merlot.py` is a python script to extract image embedding for given video.
+Here, `api.py` is a python script to extract image embedding for given video.
 
 **Input**: a video represented by a list of frames stored in pickle (e.g. ``test.pkl``)
 Each video is represented as a list of frames, each frame is a dictionary containing the following keys:
