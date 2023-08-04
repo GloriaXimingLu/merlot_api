@@ -13,8 +13,8 @@ Each video is represented as a list of frames, each frame is a dictionary contai
 * ``idx``: index of the frame (``int``)
 
 
-```bash
-pip install youtube-dl
-youtube-dl -f "best[height<=480,ext=mp4]" https://www.youtube.com/watch?v=pmjPjZZRhNQ -o "%(id)s.%(ext)s"
+```python
+from api import get_image_embedding
+embedding = get_image_embedding('test.pkl')
 ```
 **Output**: image embedding for all the frames in the given video (``numpy.ndarray``)
