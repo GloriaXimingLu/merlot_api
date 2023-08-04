@@ -17,4 +17,4 @@ Each video is represented as a list of frames, each frame is a dictionary contai
 from api import get_image_embedding
 embedding = get_image_embedding('test.pkl')
 ```
-**Output**: image embedding for all the frames in the given video (``numpy.ndarray``)
+**Output**: image embedding for all the frames in the given video (``numpy.ndarray``, ``[num_image, num_patch_per_img, embed_shape]``)
