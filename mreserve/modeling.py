@@ -842,6 +842,33 @@ class MerlotReserve(nn.Module):
         joint_enc = unit_normalize(self.joint_proj(joint_enc[0, :token_length]))
         return joint_enc
 
+    def embed_image(self, images, audio_clips, tokens, subseg_idxs):
+        """
+        This embeds a video, with both images and audio clips.
+        NOTE: It's wasted compute if audio_clips is empty (maybe we should have a different function for that)
+        :param images: [num_segments, num_patch_per_img, 768] - `prepatchified' images
+        :param audio_clips: [num_subsegments, num_hops_per_audio, 65]
+        :param tokens: [L] tokens (or the token `AUDIOSPAN' which says we use audio there.)
+        :param subseg_idxs: [L] which subsegment we're on, for each token.
+        :return: a joint encoding of size [L, H], tokens conditioned on images.
+        """
+        num_segments, num_patch_per_img, pp3 = images.shape
+        assert pp3 == 768
+
+        num_subsegments, num_hops_per_audio, num_mels_plus_one = audio_clips.shape
+        assert num_subsegments == 3 * num_segments
+        assert num_hops_per_audio == self.audio_seq_length
+        assert num_mels_plus_one == 65
+
+        token_length, = tokens.shape
+        token_length_, = subseg_idxs.shape
+        assert token_length_ == token_length
+        ###
+        imgs_enc = self.vision_encoder(images.reshape((-1, num_patch_per_img, pp3)))['seq_attnpool']
+        imgs_enc = imgs_enc.reshape((num_segments * num_patch_per_img // 4, self.hidden_size))
+
+        return imgs_enc
+
     def batch_embed_video(self, images, audio_clips, tokens, subseg_idxs):
         return jax.vmap(self.embed_video)(images, audio_clips, tokens, subseg_idxs)
 

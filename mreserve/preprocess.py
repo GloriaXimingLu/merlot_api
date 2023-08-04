@@ -494,9 +494,6 @@ def preprocess_video(video_segments: List[Dict], output_grid_size: Tuple[int, in
 
     :return: A dictionary of things. This isn't batched (that logic is a bit trickier, but it's also more efficient)
     """
-    if len(video_segments) > 8:
-        raise ValueError("We only support videos of at most 8 segments right now")
-
     images = np.stack([preprocess_image_to_patches(o_i['frame'],
                                                    output_grid_size=output_grid_size) for o_i in video_segments])
     subseg_idxs = [] # also known as 'audio_ptr'
