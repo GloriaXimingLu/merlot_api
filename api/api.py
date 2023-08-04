@@ -26,10 +26,6 @@ def get_image_embedding(video_file):
 
     video_pre = preprocess_video(video_segments, output_grid_size=grid_size, verbose=True)
     out_h = model.embed_image(**video_pre)
-    import ipdb
-    ipdb.set_trace()
+    # shape [num_image, num_patch_per_img, embed_shape]
     return out_h
-
-
-get_image_embedding('test.pkl')
 
