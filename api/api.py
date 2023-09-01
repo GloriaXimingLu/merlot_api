@@ -15,8 +15,11 @@ grid_size = (18, 32)
 model = PretrainedMerlotReserve.from_pretrained(model_name='large', image_grid_size=grid_size)
 
 
-def get_image_embedding(video_file):
-    video_segments = pickle.load(open(video_file, 'rb'))
+def get_image_embedding(video_file, file_type='mp4'):
+    if file_type == 'mp4':
+        video_segments = video_to_segments(video_file)
+    else:
+        video_segments = pickle.load(open(video_file, 'rb'))
 
     # Set up a fake classification task.
     video_segments[0]['text'] = 'in this video i\'ll be<|MASK|>'

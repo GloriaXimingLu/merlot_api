@@ -2,19 +2,10 @@
 
 Here, `api.py` is a python script to extract image embedding for given video.
 
-**Input**: a video represented by a list of frames stored in pickle (e.g. ``test.pkl``)
-Each video is represented as a list of frames, each frame is a dictionary containing the following keys:
-
-* ``start_time``: starting time of the video segment (``int``)
-* ``end_time``: end time of the video segment (``int``)
-* ``mid_time``: time of the frame (``int``)
-* ``frame``: image (``numpy.ndarray``)
-* ``spectrogram``: audio of the video segment (``numpy.ndarray``)
-* ``idx``: index of the frame (``int``)
-
+**Input**: a MP4 video (e.g. ``test.mp4``)
 
 ```python
 from api import get_image_embedding
-embedding = get_image_embedding('test.pkl')
+embedding = get_image_embedding('pmjPjZZRhNQ.mp4', file_type='mp4')
 ```
 **Output**: image embedding for all the frames in the given video (``numpy.ndarray``, ``[num_image, num_patch_per_img, embed_shape]``)
